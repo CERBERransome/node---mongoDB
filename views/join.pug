@@ -1,0 +1,25 @@
+extends layouts/main.pug
+
+block content
+    div.form-container
+        form(action=routes.postJoin, method="post")
+            input(type="text", name="name", placeholder="Full name" required=true)
+            input(type="email", name="email", placeholder="Email" required=true)
+            input(type="password", name="password", placeholder="Password" required=true)
+            input(type="password", name="password2", placeholder="Verify Password" required=true)
+            input(type="submit", value="Join now!")
+        include partials/socialLogin
+//-이렇게 해도 현재는 post방식으로 req를 받는 router가 없어서 안된다 바로 main으로 gogo
+//- **POST방식 데이터 전송하기**
+
+//- 1. HTML(PUG)에서, form태그 method를 post로 설정해주고, input에 name속성을 추가해서 정보를 보낸다.
+//- 2. 라우팅에서 기존에 사용하던 get이 아닌, post로 또다른 하나를 만들어 데이터를 받을 예정.
+
+//- 헷깔렸던점,
+//- join과 login 왜 둘다 action을 'login'으로 잡지?
+//- 왜 이걸 다 /logIn으로 보내주지?,,,
+
+
+//- -> 다음영상에서 해결됨.
+//- join 은 /join으로 보내준다. POST << 방식으로, 따라서 이 데이터를 받아 POST에서 처리해서 데이터를 받고, 회원가입을 진행
+//- login에서 받은 /login 또한 POST 방식으로 받아서, 데이터베이스를 검색하지 않을까?

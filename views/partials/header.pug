@@ -1,0 +1,22 @@
+header.header
+    div.header__column
+        a(href=routes.home)
+            i.fab.fa-youtube
+    div.header__column
+        form(action=routes.search, method="get")
+            input(type="text", placeholder="Search by term...", name="term")
+    div.header__column
+        ul
+            if !user.isAuthenticated
+                li
+                    a(href=routes.join) Join
+                    //-어트리뷰트에 변수를 적용시킬떈 #{}이 필요없다
+                li
+                    a(href=routes.login) Log in
+            else
+                li
+                    a(href=`/video/${routes.videoUpload}`) Upload
+                li
+                    a(href=routes.userDetail(user.id)) Profile
+                li
+                    a(href=routes.logout) Log out

@@ -1,0 +1,9 @@
+extends layouts/main.pug
+
+block content
+        div.form-container
+        form(action=routes.editProfile, method="post")
+            input(type="text", placeholder="Title", name="EditVideoTitle")
+            input(type="email", placeholder="Description", name="EditVideoDescription")
+            input(type="submit", value="Update Video")
+        a.form-container__link.form-container__link--delete(href=`/video/${routes.deleteVideo}`) Delete Video

@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.15.1/css/all.css", integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp", crossorigin="anonymous")
+        //-이렇게 어트리뷰트는 ()안에 쓰고 어트리뷰트는 ,로 구분한다
+        title #{pageTitle} | #{siteName}
+        //-이러면 render의 두번째 에 있는 obj의 pageTitle을 불러와 화면에 띄운다
+    body
+        include ../partials/header
+        main
+            block content
+            //-이렇게하고 extends layouts/main.pug를 작성후 block content안에 쓸코드를 적으면
+            //-모든 home.pug, join.pug....등등등의 내용이 다 여기 자동으로 이 코드가 작성되고 쓰는 코드는 다 main 태그에 들어 가는게 된다
+        include ../partials/footer
+        //-이렇게 하면 이 디렉토리 밖에있는 partials속에 footer을 찾아 적용시키게된다

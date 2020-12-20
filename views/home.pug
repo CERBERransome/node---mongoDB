@@ -1,0 +1,26 @@
+extends layouts/main
+include mixins/videoBlock
+//-pug는 view engine이다
+//-pug를 사용하려면 사용할려는 js파일에 app.set("view engine", "pug");를 하면된다
+//-pug는 템플릿 언어다 express의 view engin이다
+//-pug는 html파일들이 더 아름답게 보이도록 만들어준다
+//-pug에서는 <p>Hello!!</p>를 할게 p Hello!!를 하면 그냥된다
+//-그리고 html file은 app.set("views", "/any") 이렇게 바꿔주지 않는이상 무조건 views라는 file에 들어가 있어야한다
+//-이제 이 템플릿을 웹사이트에 보여 주려면 (videoController.js의 와우 pug 여기 라고 시작 하는 부분에)
+
+//- block content
+//-     div.videos
+//-         each video in videos
+//-             h1= video.title
+//-             p= video.description
+//-이렇게 하면 videos라는 배열을 하나하나씩 video에 부여해서 for같이 video.title을 적용시키는 거다(pug사랑해❤❤❤❤❤❤❤❤❤❤❤❤❤)
+block content
+    div.videos
+        each video in videos
+            +videoBlock({
+                title:video.title,
+                views:video.views,
+                videoFile:video.videoFile,
+                id:video.id
+            })
+//-이건 mixin이란 방식인데 똑같이 each로 하고 이렇게 쓰면 each덕분에 이게 4번 반복되 videoBlock에 있는 코드가 title을 받고 그 title을 4번 출력하는 거다(이해안 되면 #2.22봐 "mixin은 다른 정보 같은 구조를 사용할때 많이쓴다")
