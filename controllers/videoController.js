@@ -37,13 +37,36 @@ export const videoDetail = (req,res) => {
 export const getUpload = (req,res) => {
     res.render("upload", {pageTitle:"Upload"});
 }
+//수정가니까 똑디 봐라
+// export const postUpload = (req,res) => {
+//     const {
+//         body: { file, title, description }
+//     } = req;
+//     console.dir(file, title, description)
+//     //여기에서 중요한건 우리는 file name원하는게아니라 file url을 원한다 중요하다
+//      res.render("upload", {pageTitle:"Upload"});
+// };
+//수정가니까 똑디 봐라
 
-export const postUpload = (req,res) => {
+
+//multer.ver
+export const postUpload = async (req,res) => {
     const {
-        body: { file, title, description }
-    } = req;
-    res.redirect(routes.videoDetail(324393));
+        body: { title, description },
+        file: { path }
+    }
+    = req;
+    //보면 file에 path라는 게있다 이게 우리가 원하던거다!!
+    const newVideo = await Video.create({
+        fileUrl: path,
+        title,
+        description
+    });
+    console.log(newVideo)
+    res.redirect(routes.videoDetail(newVideo.id));
+    //자 됬다! 너무이쁘다 id 연결 파일 너무이쁘다
 };
+//파일을 업로드하고 submit을하니 video란 폴더가 생기고 이상한 파일이 생겼다
 
 export const editVideo = (req,res) => {
     res.render("editVideo", {pageTitle:"Edit Video"});

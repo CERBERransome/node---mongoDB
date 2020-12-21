@@ -2,9 +2,12 @@ extends layouts/main.pug
 
 block content
     div.form-container
-        form(method="post")
+        //-multer = URL화 시키는 것? 더 알아볼것.
+        form(method="post", enctype="multipart/form-data")
+            //-multer를 쓸라면 form에 enctype="multipart/form-data"을 입력해야한다
+            //-middlewares로
             label(for="VideoFile") Video File
-            input(type="file", id="VideoFile", name="VideoFile" required=true)
-            input(type="text", placeholder="Title", name="videoTitle" required=true)
-            input(type="text", placeholder="Description", name="videoDescription" required=true)
+            input(type="file", id="VideoFile", name="videoFile" required=true, accept="video/*")
+            input(type="text", placeholder="Title", name="title" required=true)
+            input(type="text", placeholder="Description", name="description" required=true)
             input(type="submit", value="Upload Video")
