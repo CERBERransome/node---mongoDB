@@ -1,8 +1,10 @@
 //아! 하기전에 mongodb를 쓸라면 mongod가 켜져있어야하는데 확인법은 mongod가 켜져있으면 mongo를 했을떄 정상적으로 뜬다
-
+//****************** import ********************
+//node model
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config()
+//****************** import ********************
 
 mongoose.connect(
     // "mongodb://localhost:27017/nu-tube",
