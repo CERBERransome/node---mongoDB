@@ -16,7 +16,6 @@ const port = process.env.PORT;
 
 const handleListening = () =>{
     console.log(`✅ Listening on: http://localhost:${port}`);
-    console.log(`✅ Listening on profile: http://localhost:${port}/profile`);
 };
 
 main.listen(port, handleListening);

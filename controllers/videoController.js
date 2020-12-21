@@ -1,15 +1,29 @@
 import routes from "../routes";
 
-export const home =(req, res) => {
-    res.render("home", {pageTitle:"Home", videos});
-}
 
-//와우 pug 여기 이렇게 send대신 render를 쓰면 된다 우리는 이미 app.set("view engine", "pug");를 해서 알아서 render가 views에 home인 pug파일을 찾아 띄운다
+//model을 사용할려면 일단 import를 하고
+//아 그리고 이건 DB의 element가 아니고 이건 단지 model이다 완-전 다른거다 element를 받는 통로일 뿐이지 elerment자체는 아니다
+import Video from "../models/video"
+//사용방법은
+export const home = async (req, res) => {
+    //개념정리 async는 이 함수내에서 뭔가 기달려야 할게 있다는거 알려주는거고
+    try{
+        const videos = await Video.find({});
+        //await은 이 작업이 끝나면 이 작업의 결과를 return해주는거다(작업이 성공적이든 아니든 끝나면 그냥 render바로 실행 그래서 try쓰겟음)
+        console.log(videos);
+        //그리고 여기서 콘솔로그 하니까 node창에서 띄워지네 (╯°□°）╯︵ ┻━┻)
+        res.render("home", {pageTitle:"Home", videos});
+    } catch(error){
+        console.log(`❌ 👨🏼‍💻 Error:${error}`)
+        res.render("home", {pageTitle:"Home", videos:[]});
+    }
+}
+//이렇게 사용하면 된다(find가 뭔지 ㅁㄹ겠음)
+//이러면 err는 안나지만 아무 video도 화면에 안뜰겄이다 왜냐하면 현재 videos는 빈 array이기 떄문이다 아직 생성도니 video가 없으니
+
 export const search =(req, res) => {
     const {query:{term : searchingBy}} = req;
     res.render("search", {pageTitle:"Search", searchingBy, videos});
-    //이렇게 searchingBy에 req.query에 저장되어있는 term이란 값을 저장할수있다
-    //그리고 이렇게 값을 불러올라면 꼭 form방식이 get이여야 한다
 }
 
 export const video = (req,res) => {
@@ -28,7 +42,6 @@ export const postUpload = (req,res) => {
     const {
         body: { file, title, description }
     } = req;
-    // To Do: Upload and save video
     res.redirect(routes.videoDetail(324393));
 };
 

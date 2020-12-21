@@ -42,3 +42,4 @@ const model = mongoose.model("video", VideoSchema);
 //저 위에있는 Schema를 통해 모델을 만들었다
 export default model;
 
+//videoController.js로 -> -> ->
