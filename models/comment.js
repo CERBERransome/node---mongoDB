@@ -19,3 +19,4 @@ const CommentSchema = new mongoose.Schema({
     // //또다른 방법이 있는데 video.js에 Schema맨 마지막 값
 });
 const model = mongoose.model("comment", CommentSchema)
+export default model;
