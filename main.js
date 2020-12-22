@@ -10,8 +10,11 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 const app = express()
 
-app.set("view engine", "pug");
 app.use(helmet());
+app.set("view engine", "pug");
+app.use("/upload", express.static("upload/"))
+//                 이거는 directory에서 file을 보내주는 middleware다
+//이렇게 하니 video가 정상 작동한다
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

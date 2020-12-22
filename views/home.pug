@@ -20,7 +20,7 @@ block content
             +videoBlock({
                 title:video.title,
                 views:video.views,
-                videoFile:video.videoFile,
+                videoFile:video.fileUrl,
                 id:video.id
             })
 //-이건 mixin이란 방식인데 똑같이 each로 하고 이렇게 쓰면 each덕분에 이게 4번 반복되 videoBlock에 있는 코드가 title을 받고 그 title을 4번 출력하는 거다(이해안 되면 #2.22봐 "mixin은 다른 정보 같은 구조를 사용할때 많이쓴다")

@@ -1,7 +1,7 @@
 import multer from "multer";
 import routes from "./routes";
 
-const multerVideo = multer({dest: "video/"})
+const multerVideo = multer({dest: "upload/videos/"})
 //이렇게 쓰면된다 뜻은 더알아보기로....
 //그리고
 export const uploadVideo = multerVideo.single("videoFile");
