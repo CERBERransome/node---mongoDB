@@ -8,7 +8,7 @@ import Video from "../models/video"
 export const home = async (req, res) => {
     //개념정리 async는 이 함수내에서 뭔가 기달려야 할게 있다는거 알려주는거고
     try{
-        const videos = await Video.find({});
+        const videos = await Video.find({}).sort({_id:-1});
         //await은 이 작업이 끝나면 이 작업의 결과를 return해주는거다(작업이 성공적이든 아니든 끝나면 그냥 render바로 실행 그래서 try쓰겟음)
         console.log(videos);
         //그리고 여기서 콘솔로그 하니까 node창에서 띄워지네 (╯°□°）╯︵ ┻━┻)
