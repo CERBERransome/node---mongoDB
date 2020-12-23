@@ -82,29 +82,34 @@ export const postUpload = async (req,res) => {
 
 export const getEditVideo = async (req, res) => {
     const {
-        params: { id }
+      params: { id }
     } = req;
     try {
-        const video = await Video.findById(id);
-        res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+      const video = await Video.findById(id);
+      res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
     } catch (error) {
-        res.redirect(routes.home);
+      res.redirect(routes.home);
     }
-};
-
-export const postEditVideo = async (req, res) => {
+  };
+  
+  export const postEditVideo = async (req, res) => {
     const {
-        params: { id },
-        body: { title, description }
+      params: { id },
+      body: { title, description }
     } = req;
     try {
+<<<<<<< HEAD
         await Video.findOneAndUpdate({ _id: id }, { title, description });
         //              의문을 가져라(mongoose에서 봐라)
         res.redirect(routes.videoDetail(id));
+=======
+      await Video.findOneAndUpdate({ id }, { title, description });
+      res.redirect(routes.videoDetail(id));
+>>>>>>> parent of 92dc022 (2020.12.23 1)
     } catch (error) {
-        res.redirect(routes.home);
+      res.redirect(routes.home);
     }
-};
+  };
 
 
 export const deleteVideo = async (req,res) => {
