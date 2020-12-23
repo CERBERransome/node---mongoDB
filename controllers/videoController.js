@@ -39,7 +39,7 @@ export const videoDetail = async (req,res) => {
     //                  Video는 model 이다
     //연재 findById는 Video안에있는 id란 obj를 가져오겠단 것이다
     console.log(video)
-    res.render("videoDetail", {pageTitle:"Video Detail", video});
+    res.render("videoDetail", {pageTitle:video.title, video});
     }catch(err){
         console.log(`❌ Error:${err}`)
         res.redirect(routes.home);
@@ -99,7 +99,7 @@ export const postEditVideo = async (req, res) => {
     } = req;
     try {
         await Video.findOneAndUpdate({ _id: id }, { title, description });
-        //              의문을 가져라
+        //              의문을 가져라(mongoose에서 봐라)
         res.redirect(routes.videoDetail(id));
     } catch (error) {
         res.redirect(routes.home);
@@ -107,6 +107,15 @@ export const postEditVideo = async (req, res) => {
 };
 
 
-export const deleteVideo = (req,res) => {
-    res.render("deleteVideo", {pageTitle:"Delete Video"});
+export const deleteVideo = async (req,res) => {
+    const {
+        params: { id }
+    } = req;
+    try{
+        await Video.findOneAndRemove({_id : id})
+        //            이 id를 찾고 id를 삭제시킨다
+    } catch(err){
+        console.log(`❌ Error: ${err}`);
+    }
+    res.redirect(routes.home);
 }
