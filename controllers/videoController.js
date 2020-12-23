@@ -30,8 +30,20 @@ export const video = (req,res) => {
     res.render("video", {pageTitle:"Video"});
 }
 
-export const videoDetail = (req,res) => {
-    res.render("videoDetail", {pageTitle:"Video Detail"});
+export const videoDetail = async (req,res) => {
+    // console.log(req.params)
+    //rout.js에 VIDEO_DETAIL에 /:id를 면시해놓아서 params를 하면자동으로 id의 값을 불러온다 ex.{ id: '5fe163900c5d572fd0098ac6' }
+    const { params:{id} } = req;
+    try{   
+    const video = await Video.findById(id);
+    //                  Video는 model 이다
+    //연재 findById는 Video안에있는 id란 obj를 가져오겠단 것이다
+    console.log(video)
+    res.render("videoDetail", {pageTitle:"Video Detail", video});
+    }catch(err){
+        console.log(`❌ Error:${err}`)
+        res.redirect(routes.home);
+    }
 }
 
 export const getUpload = (req,res) => {
@@ -68,9 +80,31 @@ export const postUpload = async (req,res) => {
 };
 //파일을 업로드하고 submit을하니 video란 폴더가 생기고 이상한 파일이 생겼다
 
-export const editVideo = (req,res) => {
-    res.render("editVideo", {pageTitle:"Edit Video"});
-}
+export const getEditVideo = async (req, res) => {
+    const {
+      params: { id }
+    } = req;
+    try {
+      const video = await Video.findById(id);
+      res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+    } catch (error) {
+      res.redirect(routes.home);
+    }
+  };
+  
+  export const postEditVideo = async (req, res) => {
+    const {
+      params: { id },
+      body: { title, description }
+    } = req;
+    try {
+      await Video.findOneAndUpdate({ id }, { title, description });
+      res.redirect(routes.videoDetail(id));
+    } catch (error) {
+      res.redirect(routes.home);
+    }
+  };
+
 
 export const deleteVideo = (req,res) => {
     res.render("deleteVideo", {pageTitle:"Delete Video"});
