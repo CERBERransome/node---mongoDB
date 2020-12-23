@@ -21,10 +21,24 @@ export const home = async (req, res) => {
 //이렇게 사용하면 된다(find가 뭔지 ㅁㄹ겠음)
 //이러면 err는 안나지만 아무 video도 화면에 안뜰겄이다 왜냐하면 현재 videos는 빈 array이기 떄문이다 아직 생성도니 video가 없으니
 
-export const search =(req, res) => {
+//수정을 한다
+export const search = async (req, res) => {
     const {query:{term : searchingBy}} = req;
-    res.render("search", {pageTitle:"Search", searchingBy, videos});
+    let videos = [];
+    try {
+        videos = await Video.find({
+        //🌟🌟🌟🌟
+        title: { $regex: searchingBy, $options: "i" }
+                    // 이건 regex라는 기능을 이용해 "title에 searchingBy의 단어가 "들어가면" find를 해주는거다" 그리고 options는 "option인데 현재 i라는건 searchingBy의 
+                    //단어가 들어가는데 대소문자 구분 없다는 소리다"
+    });
+    } catch (error) {
+        console.log(error);
+    }
+    res.render("search", { pageTitle: "Search", searchingBy, videos });
 }
+//수정을 한다
+
 
 export const video = (req,res) => {
     res.render("video", {pageTitle:"Video"});
@@ -39,7 +53,7 @@ export const videoDetail = async (req,res) => {
     //                  Video는 model 이다
     //연재 findById는 Video안에있는 id란 obj를 가져오겠단 것이다
     console.log(video)
-    res.render("videoDetail", {pageTitle:"Video Detail", video});
+    res.render("videoDetail", {pageTitle:video.title, video});
     }catch(err){
         console.log(`❌ Error:${err}`)
         res.redirect(routes.home);
@@ -82,36 +96,40 @@ export const postUpload = async (req,res) => {
 
 export const getEditVideo = async (req, res) => {
     const {
-      params: { id }
+        params: { id }
     } = req;
     try {
-      const video = await Video.findById(id);
-      res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+        const video = await Video.findById(id);
+        res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
     } catch (error) {
-      res.redirect(routes.home);
+        res.redirect(routes.home);
     }
-  };
-  
-  export const postEditVideo = async (req, res) => {
+};
+
+export const postEditVideo = async (req, res) => {
     const {
-      params: { id },
-      body: { title, description }
+        params: { id },
+        body: { title, description }
     } = req;
     try {
-<<<<<<< HEAD
         await Video.findOneAndUpdate({ _id: id }, { title, description });
-        //              의문을 가져라
+        //              의문을 가져라(mongoose에서 봐라)
         res.redirect(routes.videoDetail(id));
-=======
-      await Video.findOneAndUpdate({ id }, { title, description });
-      res.redirect(routes.videoDetail(id));
->>>>>>> parent of 92dc022 (2020.12.23 1)
     } catch (error) {
-      res.redirect(routes.home);
+        res.redirect(routes.home);
     }
-  };
+};
 
 
-export const deleteVideo = (req,res) => {
-    res.render("deleteVideo", {pageTitle:"Delete Video"});
+export const deleteVideo = async (req,res) => {
+    const {
+        params: { id }
+    } = req;
+    try{
+        await Video.findOneAndRemove({_id : id})
+        //            이 id를 찾고 id를 삭제시킨다
+    } catch(err){
+        console.log(`❌ Error: ${err}`);
+    }
+    res.redirect(routes.home);
 }
